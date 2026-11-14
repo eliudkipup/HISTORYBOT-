@@ -3,7 +3,7 @@
 // HISTORYBOT SUPABASE CONNECTION
 // =====================================
 
-const SUPABASE_URL = "https://axldothhxyxcsciyhckz.supabase.co/rest/v1/";
+const SUPABASE_URL = "https://axldothhxyxcsciyhckz.supabase.co";
 
 const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_1cBMgR06z2fRiEFgWijd-w_xtlG07_9";
 
