@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HISTORYBOT</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- ================================= -->
+    <!-- 1. HISTORYBOT ANIMATED INTRO      -->
+    <!-- ================================= -->
+
+    <section id="welcome-screen">
+
+        <div class="intro-page active" id="intro-page-1">
+            <div class="welcome-logo">📜</div>
+            <h2 class="creator-name">Davis Christian</h2>
+        </div>
+
+        <div class="intro-page" id="intro-page-2">
+            <h1>WELCOME TO HISTORYBOT</h1>
+            <p>Explore the past. Understand the present.</p>
+            <p>
+                Discover fascinating historical events,
+                learn about great leaders and explore
+                Kenyan, African and world history.
+            </p>
+        </div>
+
+        <div class="intro-page" id="intro-page-3">
+            <div class="welcome-logo">📜</div>
+            <h1>YOUR JOURNEY BEGINS HERE</h1>
+            <p>History is waiting to be discovered.</p>
+        </div>
+
+        <div class="intro-page" id="intro-page-4">
+            <h1>READY TO EXPLORE?</h1>
+            <p>
+                Discover history, ask questions
+                and challenge yourself with quizzes.
+            </p>
+            <button id="start-exploring">
+                Start Exploring →
+            </button>
+        </div>
+
+    </section>
+
+
+<!-- ================================= -->
+<!-- 2. CHATBOT PAGE                   -->
+<!-- ================================= -->
+
+<main class="app" id="chat-page">
+
+    <!-- SAVED CONVERSATIONS -->
+
+    <details class="conversations-container">
+
+        <summary class="saved-chats-button">
+            <span>My Conversations</span>
+            <span class="saved-chats-arrow">⌄</span>
+        </summary>
+
+        <div id="chat-list"></div>
+
+    </details>
+
+    <!-- CHAT INTERFACE -->
+
+    <section class="chat-container">
+
+        <!-- CHAT BOX -->
+        <div id="chat-box" class="chat-box">
+
+            <div class="message bot">
+                Welcome to HISTORYBOT! Ask me anything about Kenyan, African or world history.
+            </div>
+
+        </div>
+
+        <!-- ASK QUESTION BOX -->
+        <div class="chat-input-area">
+
+            <input
+                type="text"
+                id="user-input"
+                placeholder="Ask a history question..."
+            >
+
+            
+<button id="new-chat" type="button" aria-label="New Chat" title="New Chat">
+    ＋
+</button>
+
+<button id="send-btn" type="button" aria-label="Send" title="Send">
+    ↑
+</button>
+
+
+        </div>
+
+    </section>
+
+</main>
+
+ 
+
+    <!-- ================================= -->
+    <!-- 3. FAVORITES PAGE                 -->
+    <!-- ================================= -->
+
+    <section id="favorites-page" style="display: none;">
+
+        <h2>⭐ My Favorites</h2>
+        <p>Your favorite historical conversations.</p>
+
+        <div id="favorites-list"></div>
+
+    </section>
+
+
+    <!-- ================================= -->
+    <!-- 4. HISTORY QUIZ PAGE              -->
+    <!-- ================================= -->
+
+    <section id="quiz-section" style="display: none;">
+
+        <h2>🏆 History Quiz</h2>
+        <p>Test your historical knowledge!</p>
+
+        <label for="quiz-difficulty">
+            Choose Difficulty:
+        </label>
+
+        <select id="quiz-difficulty">
+            <option value="beginner">Beginner</option>
+            <option value="intermediate">Intermediate</option>
+            <option value="advanced">Advanced</option>
+        </select>
+
+        <button id="start-quiz">Start Quiz</button>
+
+        <div id="quiz-box" style="display: none;">
+
+            <p id="quiz-progress"></p>
+
+            <h3 id="quiz-question"></h3>
+
+            <div id="quiz-options"></div>
+
+            <p id="quiz-feedback"></p>
+
+            <button id="next-question" style="display: none;">
+                Next Question
+            </button>
+
+        </div>
+
+        <div id="quiz-results" style="display: none;"></div>
+
+    </section>
+
+
+    
+<!-- ================================= -->
+<!-- 5. HISTORY LIBRARY PAGE           -->
+<!-- ================================= -->
+
+<section id="library-page" style="display: none;">
+
+    <header class="library-header">
+
+        <!-- TOP HEADER -->
+        <div class="library-top-header">
+
+            <!-- EXISTING HISTORYBOT LOGO -->
+            <div class="welcome-logo">📜</div>
+
+            <!-- CENTER HEADING -->
+            <h1>History Library</h1>
+
+            <!-- EXISTING NAVIGATION MENU -->
+            <div class="navigation-menu" id="navigation-menu">
+
+                <button id="menu-toggle" class="menu-toggle">
+                    ☰
+                </button>
+
+                <div id="menu-options" class="menu-options">
+
+                    <button id="my-chats-menu">My Chats</button>
+
+                    <button id="favorites-menu">Favorites</button>
+
+                    <button id="history-quiz-menu">History Quiz</button>
+
+                    <button id="settings-menu">Settings</button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- EXISTING SINGLE-LINE TEXT -->
+        <p>Explore the stories that shaped our world.</p>
+
+        <!-- DIVIDER -->
+        <div class="library-divider"></div>
+
+        <!-- EXISTING SEARCH BAR -->
+        <div class="library-search">
+
+            <span class="search-icon">🔍</span>
+
+            <input
+                type="search"
+                id="history-search"
+                placeholder="Search people, events, civilizations..."
+                autocomplete="off"
+            >
+
+            <button id="clear-history-search" type="button">
+                ✕
+            </button>
+
+        </div>
+
+    </header>
+
+    <div class="library-content">
+
+        <!-- SEARCH RESULTS -->
+        <div id="search-results" style="display: none;"></div>
+
+        <!-- LIBRARY MAIN CONTENT -->
+        <div id="library-main-content">
+
+            <h2>Explore Categories</h2>
+
+            <p>
+                Choose a historical category to discover
+                articles, events and great civilizations.
+            </p>
+
+            <div class="library-categories">
+
+                <button class="library-category" data-category="kenyan">
+                    <span>🇰🇪</span>
+                    <h3>Kenyan History</h3>
+                    <p>Discover Kenya's past, struggles and achievements.</p>
+                </button>
+
+                <button class="library-category" data-category="african">
+                    <span>🌍</span>
+                    <h3>African History</h3>
+                    <p>Explore Africa's kingdoms, empires and leaders.</p>
+                </button>
+
+                <button class="library-category" data-category="ancient">
+                    <span>🏛️</span>
+                    <h3>Ancient Civilizations</h3>
+                    <p>Discover the world's earliest civilizations.</p>
+                </button>
+
+                <button class="library-category" data-category="world">
+                    <span>🌐</span>
+                    <h3>World History</h3>
+                    <p>Explore major events that shaped humanity.</p>
+                </button>
+
+            </div>
+
+            <div id="library-articles"></div>
+
+        </div>
+
+        <!-- ARTICLE READER -->
+        <div id="article-reader" style="display: none;">
+
+            <button id="back-to-library">
+                ← Back to Library
+            </button>
+
+            <div id="article-content"></div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+    <!-- ================================= -->
+    <!-- 6. THEMES PAGE                    -->
+    <!-- ================================= -->
+
+    <section id="themes-page" style="display: none;">
+
+        <h2>🎨 Customize Your HISTORYBOT</h2>
+        <p>Choose your preferred appearance.</p>
+
+        <div class="theme-options">
+
+            <button class="theme-card" data-theme="midnight">
+                🌙
+                <h3>Midnight Purple</h3>
+                <p>Dark navy, purple and gold.</p>
+            </button>
+
+            <button class="theme-card" data-theme="light">
+                ☀️
+                <h3>Light Academia</h3>
+                <p>Cream, parchment and brown.</p>
+            </button>
+
+            <button class="theme-card" data-theme="ocean">
+                🌊
+                <h3>Ocean Blue</h3>
+                <p>Deep blue and cyan.</p>
+            </button>
+
+        </div>
+
+    </section>
+
+
+    <!-- ================================= -->
+    <!-- 7. SETTINGS PAGE                  -->
+    <!-- ================================= -->
+
+    <section id="settings-page" style="display: none;">
+
+        <header class="settings-header">
+
+            <h1>⚙️ Settings</h1>
+
+            <p>Personalize your HISTORYBOT experience.</p>
+
+        </header>
+
+        <div class="settings-container">
+
+            <button class="settings-card" id="open-themes">
+
+                <span>🎨</span>
+
+                <div>
+                    <h3>Appearance</h3>
+                    <p>Change your preferred theme.</p>
+                </div>
+
+                <strong>›</strong>
+
+            </button>
+
+
+            <button class="settings-card" id="open-notifications">
+
+                <span>🔔</span>
+
+                <div>
+                    <h3>Notifications</h3>
+                    <p>Manage notification preferences.</p>
+                </div>
+
+                <strong>›</strong>
+
+            </button>
+
+
+            <button class="settings-card" id="open-storage">
+
+                <span>💾</span>
+
+                <div>
+                    <h3>Data & Storage</h3>
+                    <p>Manage your saved conversations.</p>
+                </div>
+
+                <strong>›</strong>
+
+            </button>
+
+
+            <button class="settings-card" id="open-about">
+
+                <span>ℹ️</span>
+
+                <div>
+                    <h3>About HISTORYBOT</h3>
+                    <p>Learn about this project.</p>
+                </div>
+
+                <strong>›</strong>
+
+            </button>
+
+        </div>
+
+    </section>
+
+
+    <!-- ================================= -->
+    <!-- 8. JAVASCRIPT                     -->
+    <!-- ================================= -->
+
+    <script src="script.js"></script>
+
+</body>
+</html>
