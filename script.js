@@ -1598,6 +1598,100 @@ function goBack() {
 
     };
 
+  
+    // =========================================
+    // LOAD SHARED ARTICLES FROM SUPABASE
+    // =========================================
+
+    async function loadSharedArticles() {
+
+        const database = window.historybotSupabase;
+
+        if (!database) {
+            console.error("HISTORYBOT: Supabase connection not found.");
+            return;
+        }
+
+        try {
+
+            const { data, error } = await database
+                .from("history_articles")
+                .select(
+                    "id, title, summary, topic, source_name, source_url, published_at"
+                )
+                .order("published_at", { ascending: false });
+
+            if (error) {
+                throw error;
+            }
+
+            if (!Array.isArray(data)) {
+                return;
+            }
+
+            data.forEach(function (row) {
+
+                const category = String(row.topic || "").toLowerCase();
+
+                // Only accept the four existing library categories
+                if (!historyArticles[category]) {
+                    return;
+                }
+
+                // Avoid adding the same article twice
+                const alreadyExists = historyArticles[category].some(
+                    function (article) {
+                        return (
+                            (row.source_url &&
+                             article.source_url === row.source_url) ||
+                            article.title === row.title
+                        );
+                    }
+                );
+
+                if (alreadyExists) {
+                    return;
+                }
+
+                historyArticles[category].push({
+
+                    title: row.title || "Untitled History Article",
+
+                    intro: row.summary || "No summary is available.",
+
+                    sections: [],
+
+                    summary: row.summary || "No summary is available.",
+
+                    source_name: row.source_name || "Original source",
+
+                    source_url: row.source_url || "",
+
+                    published_at: row.published_at || null
+
+                });
+
+            });
+
+            console.log(
+                "HISTORYBOT: Shared articles loaded:",
+                data.length
+            );
+
+        } catch (error) {
+
+            console.error(
+                "HISTORYBOT: Could not load shared articles:",
+                error.message
+            );
+
+        }
+
+    }
+
+    // Load shared articles when HISTORYBOT opens
+    loadSharedArticles();
+
     // =========================================
     // 15. LIBRARY DISPLAY
     // =========================================
@@ -1711,6 +1805,42 @@ function openArticle(category, index) {
 
     articleContent.appendChild(summaryHeading);
     articleContent.appendChild(summaryText);
+
+    // DISPLAY ORIGINAL SOURCE LINK
+
+    if (article.source_url) {
+
+        try {
+
+            const sourceURL = new URL(article.source_url);
+
+            if (sourceURL.protocol === "https:") {
+
+                const sourceHeading = document.createElement("h2");
+                sourceHeading.textContent = "Article Source";
+
+                const sourceLink = document.createElement("a");
+
+                sourceLink.href = sourceURL.href;
+                sourceLink.textContent =
+                    "Read original article from " +
+                    (article.source_name || "the original source");
+
+                sourceLink.target = "_blank";
+                sourceLink.rel = "noopener noreferrer";
+
+                articleContent.appendChild(sourceHeading);
+                articleContent.appendChild(sourceLink);
+
+            }
+
+        } catch (error) {
+
+            console.warn("HISTORYBOT: Invalid article source link.");
+
+        }
+
+    }
 
     // Hide other library content
     if (libraryMainContent) {
