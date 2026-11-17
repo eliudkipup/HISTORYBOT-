@@ -24,6 +24,9 @@ document.addEventListener("DOMContentLoaded", function () {
     const libraryPage = get("library-page");
     const themesPage = get("themes-page");
     const settingsPage = get("settings-page");
+    const aboutPage = get("about-page");
+    const dataStoragePage = get("data-storage-page");
+  const notificationsPage = get("notifications");
 
     const navigationMenu = get("navigation-menu");
     const menuToggle = get("menu-toggle");
@@ -82,7 +85,10 @@ let isGoingBack = false;
         favoritesPage,
         libraryPage,
         themesPage,
-        settingsPage
+        settingsPage,
+        aboutPage,
+        dataStoragePage,
+        notificationsPage
     ];
 
     function hideAllPages() {
@@ -2229,18 +2235,205 @@ if (backToLibrary) {
 
     });
 
-    // THEMES
+  // OPEN THEMES
 
-    activateMenuItem("open-themes", function () {
+if (openThemes) {
+
+    openThemes.addEventListener("click", function () {
 
         showPage(themesPage);
 
     });
 
+}
+
+// ABOUT HISTORYBOT
+activateMenuItem("open-about", function () {
+    showPage(aboutPage);
+});
+
+  // OPEN DATA & STORAGE
+activateMenuItem("open-storage", function () {
+
+    showPage(dataStoragePage);
+
+});
+
+activateMenuItem("open-notifications", function () {
+    showPage(notificationsPage);
+});
+  
+  // =========================================
+// DATA & STORAGE REFRESH
+// =========================================
+
+const refreshStorageBtn = get("refresh-storage-data");
+const popup = get("popup");
+
+if (refreshStorageBtn && popup) {
+    refreshStorageBtn.addEventListener("click", async function () {
+
+        refreshStorageBtn.disabled = true;
+        refreshStorageBtn.textContent = "Refreshing...";
+
+        try {
+            // Get article count from Supabase
+            const database = window.historybotSupabase;
+
+            if (!database) {
+                throw new Error("Supabase connection is unavailable.");
+            }
+
+            const { count, error } = await database
+                .from("history_articles")
+                .select("*", { count: "exact", head: true });
+
+            if (error) throw error;
+
+            // Update article count
+            const articleCount = get("storage-article-count");
+            if (articleCount) {
+                articleCount.textContent = count ?? 0;
+            }
+
+            // Update conversation count
+            const conversationCount = get("storage-conversation-count");
+            if (conversationCount) {
+                conversationCount.textContent = conversations.length;
+            }
+
+            // Calculate local storage usage
+            let totalBytes = 0;
+
+            for (let i = 0; i < localStorage.length; i++) {
+                const key = localStorage.key(i);
+                const value = localStorage.getItem(key) || "";
+
+                totalBytes += (key.length + value.length) * 2;
+            }
+
+            const usage = get("storage-local-usage");
+
+            if (usage) {
+                usage.textContent = totalBytes < 1024 * 1024
+                    ? (totalBytes / 1024).toFixed(2) + " KB"
+                    : (totalBytes / (1024 * 1024)).toFixed(2) + " MB";
+            }
+
+            // Backblaze archive is not yet verified
+            const archiveCount = get("storage-archive-count");
+
+            if (archiveCount) {
+                archiveCount.textContent = "Not connected";
+            }
+
+            popup.textContent = "Storage information refreshed successfully!";
+            popup.classList.add("show");
+
+        } catch (error) {
+            console.error("Storage refresh error:", error);
+
+            popup.textContent = "Could not refresh storage information.";
+            popup.classList.add("show");
+
+        } finally {
+            refreshStorageBtn.disabled = false;
+            refreshStorageBtn.textContent = "Refresh Storage Data";
+
+            setTimeout(function () {
+                popup.classList.remove("show");
+            }, 3000);
+        }
+    });
+}
+
+
+// =========================================
+// NOTIFICATION PREFERENCES
+// =========================================
+
+const notificationToggles = [
+    "daily-facts-toggle",
+    "new-articles-toggle",
+    "quiz-reminders-toggle"
+];
+
+notificationToggles.forEach(function (id) {
+    const toggle = get(id);
+
+    if (!toggle) return;
+
+    // Restore previously saved preference
+    toggle.checked = localStorage.getItem("historybot-" + id) === "true";
+
+    // Save whenever the user changes a preference
+    toggle.addEventListener("change", function () {
+        localStorage.setItem(
+            "historybot-" + id,
+            toggle.checked
+        );
+    });
+});
+
+  
+// =========================================
+// BROWSER NOTIFICATIONS
+// =========================================
+
+const enableNotificationsBtn = get("enable-browser-notifications");
+const notificationStatus = get("notification-status");
+
+if (enableNotificationsBtn && notificationStatus) {
+
+    // Check current permission
+    if (!("Notification" in window)) {
+        notificationStatus.textContent =
+            "This browser does not support notifications.";
+        enableNotificationsBtn.disabled = true;
+
+    } else if (Notification.permission === "granted") {
+        notificationStatus.textContent =
+            "Browser notifications are enabled.";
+
+    } else if (Notification.permission === "denied") {
+        notificationStatus.textContent =
+            "Notifications are blocked in browser settings.";
+    }
+
+    enableNotificationsBtn.addEventListener("click", async function () {
+
+        if (!("Notification" in window)) return;
+
+        if (Notification.permission === "granted") {
+            notificationStatus.textContent =
+                "Browser notifications are already enabled.";
+            return;
+        }
+
+        try {
+            const permission = await Notification.requestPermission();
+
+            if (permission === "granted") {
+                notificationStatus.textContent =
+                    "Success! Browser notifications are enabled.";
+            } else {
+                notificationStatus.textContent =
+                    "Notification permission was not granted.";
+            }
+
+        } catch (error) {
+            console.error("Notification permission error:", error);
+            notificationStatus.textContent =
+                "Could not request notification permission.";
+        }
+    });
+}
+
+  
     // =========================================
     // 21. THEME ENGINE
     // =========================================
-
+  
     const savedTheme =
         localStorage.getItem("historybot-theme") || "midnight";
 

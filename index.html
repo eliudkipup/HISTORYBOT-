@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-< lang="en">
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
@@ -405,7 +405,166 @@
 
     </section>
 
+  
+<!-- HISTORYBOT ABOUT PAGE -->
+<section id="about-page" style="display: none; padding: 20px;">
 
+  <div style="
+    max-width: 650px;
+    margin: 0 auto;
+    background: var(--hb-panel);
+    padding: 24px;
+    border-radius: 16px;
+    color: var(--hb-text);
+    line-height: 1.7;
+  ">
+
+    <h1 style="color: var(--hb-gold); text-align: center;">
+      About HISTORYBOT
+    </h1>
+
+    <h3 style="color: var(--hb-purple-light); text-align: center;">
+      Explore the past. Understand the present.
+    </h3>
+
+    <h2>Welcome to HISTORYBOT — Your Gateway to History.</h2>
+
+    <p>
+      HISTORYBOT is an educational history platform created to make learning about the past easier, more engaging and accessible to everyone.
+    </p>
+
+    <p>
+      From the ancient civilizations that shaped human society to the events that transformed modern nations, HISTORYBOT brings together stories, knowledge and historical discoveries from Kenya, Africa and around the world.
+    </p>
+
+    <h2>Our Mission</h2>
+    <p>
+      Our mission is to make historical knowledge accessible, encourage curiosity and help people understand how the past has shaped the world we live in today.
+    </p>
+
+    <h2>Our Vision</h2>
+    <p>
+      To become a valuable digital destination for historical learning, discovery and exploration, connecting people with the stories and events that shaped humanity.
+    </p>
+
+    <h2>What You Can Explore</h2>
+
+    <p><strong>Kenyan History:</strong> Discover Kenya's heritage, independence journey, historical leaders and important events.</p>
+
+    <p><strong>African History:</strong> Explore ancient kingdoms, civilizations, cultures and the people who shaped Africa.</p>
+
+    <p><strong>World History:</strong> Travel through ancient civilizations, empires, revolutions, wars and major global events.</p>
+
+    <p><strong>History Quiz:</strong> Test your historical knowledge and challenge yourself.</p>
+
+    <p><strong>History Library:</strong> Discover and explore historical articles across different subjects and periods.</p>
+
+    <p><strong>AI History Chat:</strong> Ask historical questions and explore answers through interactive conversations.</p>
+
+    <h2>Our Philosophy</h2>
+    <p>
+      History is more than dates, names and events. It is the story of humanity — our achievements, struggles, discoveries and lessons.
+    </p>
+
+    <p>
+      We believe understanding history helps us appreciate our heritage, question the present and build a more informed future.
+    </p>
+
+    <h2>Created By</h2>
+    <h3 style="color: var(--hb-gold);">Davis Christian</h3>
+    <p>Founder and Creator of HISTORYBOT.</p>
+
+    <h2 style="text-align: center; color: var(--hb-purple-light);">
+      Our Motto
+    </h2>
+
+    <p style="text-align: center; font-weight: bold;">
+      Explore the past. Understand the present.
+    </p>
+
+  </div>
+</section>
+<!-- END ABOUT PAGE -->
+
+  <!-- DATA & STORAGE PAGE -->
+<section id="data-storage-page" style="display: none; padding: 20px;">
+
+    <div style="max-width:650px; margin:auto; background:var(--hb-panel); padding:24px; border-radius:16px; color:var(--hb-text); line-height:1.7;">
+
+        <h2 style="color:var(--hb-gold);">💾 Data & Storage</h2>
+
+        <p>Manage and monitor HISTORYBOT's stored information.</p>
+
+        <hr>
+
+        <h3>📚 History Articles</h3>
+        <p>View the number of articles available in the History Library.</p>
+        <p id="storage-article-count">Loading article count...</p>
+
+        <h3>☁️ Cloud Archive</h3>
+        <p>Monitor articles archived in Backblaze B2.</p>
+        <p id="storage-archive-count">Loading archive status...</p>
+
+        <h3>💬 Saved Conversations</h3>
+        <p id="storage-conversation-count">Checking saved conversations...</p>
+
+        <h3>📦 Local Storage</h3>
+        <p id="storage-local-usage">Checking local storage...</p>
+
+        <button id="refresh-storage-data" class="settings-card">
+            🔄 Refresh Storage Information
+        </button>
+
+    </div>
+
+</section>
+  
+  <div id="popup"></div>
+
+
+<!-- NOTIFICATIONS PAGE -->
+<section id="notifications" class="page">
+
+    <div class="page-header">
+        <h2>🔔 Notifications</h2>
+        <p>Manage your HISTORYBOT notification preferences.</p>
+    </div>
+
+    <div class="settings-card">
+        <div>
+            <h3>Daily History Facts</h3>
+            <p>Receive interesting historical facts.</p>
+        </div>
+        <input type="checkbox" id="daily-facts-toggle">
+    </div>
+
+    <div class="settings-card">
+        <div>
+            <h3>New Articles</h3>
+            <p>Get notified when new articles are added.</p>
+        </div>
+        <input type="checkbox" id="new-articles-toggle">
+    </div>
+
+    <div class="settings-card">
+        <div>
+            <h3>History Quiz Reminders</h3>
+            <p>Get reminders to practise history.</p>
+        </div>
+        <input type="checkbox" id="quiz-reminders-toggle">
+    </div>
+  
+<button id="enable-browser-notifications" class="settings-card">
+    🔔 Enable Browser Notifications
+</button>
+
+<p id="notification-status">
+    Browser notifications are not enabled yet.
+</p>
+  
+</section>
+
+  
     <!-- ================================= -->
     <!-- 8. JAVASCRIPT                     -->
     <!-- ================================= -->
@@ -415,3 +574,6 @@
 src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="supabase.js"></script>
 <script src="script.js"></script>
+
+  </body>
+</html>

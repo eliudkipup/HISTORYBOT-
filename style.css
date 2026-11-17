@@ -2024,3 +2024,89 @@ header p {
     transform: scale(1.05);
     box-shadow: none;
 }
+
+/* =========================================
+   HISTORYBOT DATA & STORAGE DASHBOARD
+========================================= */
+
+#data-storage-page {
+    display: none;
+    width: 100%;
+    max-width: 700px;
+    margin: 20px auto;
+    color: var(--hb-text);
+}
+
+#data-storage-page > div {
+    width: 100%;
+    border: 1px solid #394563;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.25);
+}
+
+#data-storage-page h2 {
+    margin-bottom: 15px;
+}
+
+#data-storage-page h3 {
+    margin-top: 24px;
+    margin-bottom: 7px;
+    color: var(--hb-purple-light);
+}
+
+#data-storage-page p {
+    line-height: 1.7;
+    color: var(--hb-muted);
+}
+
+#data-storage-page hr {
+    margin: 20px 0;
+    border: none;
+    border-top: 1px solid #394563;
+}
+
+#data-storage-page #refresh-storage-data {
+    width: 100%;
+    justify-content: center;
+    margin-top: 25px;
+}
+
+/* =========================================
+   REFRESH POPUP NOTIFICATION
+========================================= */
+
+#popup {
+    display: none;
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: max-content;
+    max-width: calc(100% - 30px);
+    padding: 14px 20px;
+    background: #202943;
+    color: #ffffff;
+    border: 1px solid var(--hb-gold);
+    border-radius: 12px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.35);
+    text-align: center;
+    font-size: 14px;
+    line-height: 1.5;
+    z-index: 100000;
+}
+
+#popup.show {
+    display: block;
+    animation: popupAppear 0.3s ease;
+}
+
+@keyframes popupAppear {
+    from {
+        opacity: 0;
+        transform: translate(-50%, -12px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translate(-50%, 0);
+    }
+}
